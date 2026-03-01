@@ -4,15 +4,12 @@
 <section class="hero" id="inicio">
   <div class="container hero__inner">
 
-    <!-- Columna izquierda — contenido principal -->
     <div class="hero__content">
 
       <span class="section-label">Consultoría Tecnológica · Lima, Perú</span>
 
       <h1 class="hero__title">
-        Automatización<br/>
-        <span class="accent">IA</span> y Energía<br/>
-        en un solo lugar
+        Automatización <span class="accent">IA</span> y Energía en un solo lugar
       </h1>
 
       <p class="hero__subtitle">
@@ -22,53 +19,46 @@
       </p>
 
       <div class="hero__actions">
-        <a href="#contacto" class="btn-primary">
-          Agendar una llamada
-        </a>
-        <a href="#servicios" class="btn-secondary">
-          Ver servicios
-        </a>
+        <a href="#contacto" class="btn-primary">Agendar una llamada</a>
+        <a href="#servicios" class="btn-secondary">Ver servicios</a>
       </div>
 
     </div>
 
-    <!-- Columna derecha — visual -->
     <div class="hero__visual">
       <div class="hero__graphic">
 
-        <!-- Tarjeta flotante 1 -->
+        <!-- Tarjeta 1 — CAMBIO 2 -->
         <div class="hero__card hero__card--1">
           <span class="hero__card-icon">⚡</span>
           <div>
-            <p class="hero__card-label">Automatización Industrial</p>
-            <p class="hero__card-value">PLC · SCADA · IoT</p>
+            <p class="hero__card-label">Energía Inteligente</p>
+            <p class="hero__card-value">Solar · BESS · Híbrido</p>
           </div>
         </div>
 
-        <!-- Elemento central -->
+        <!-- Centro animado -->
         <div class="hero__center">
           <div class="hero__ring hero__ring--outer"></div>
           <div class="hero__ring hero__ring--inner"></div>
-          <div class="hero__core">
-            <span>AI</span>
-          </div>
+          <div class="hero__core"><span>AI</span></div>
         </div>
 
-        <!-- Tarjeta flotante 2 -->
+        <!-- Tarjeta 2 — CAMBIO 2 -->
         <div class="hero__card hero__card--2">
-          <span class="hero__card-icon">☀️</span>
-          <div>
-            <p class="hero__card-label">Energía Solar</p>
-            <p class="hero__card-value">FV · BESS · Off-grid</p>
-          </div>
-        </div>
-
-        <!-- Tarjeta flotante 3 -->
-        <div class="hero__card hero__card--3">
           <span class="hero__card-icon">🤖</span>
           <div>
             <p class="hero__card-label">IA Aplicada</p>
-            <p class="hero__card-value">Modelos · Chatbots · Data</p>
+            <p class="hero__card-value">ML · LLMs · Datos</p>
+          </div>
+        </div>
+
+        <!-- Tarjeta 3 — CAMBIO 2 -->
+        <div class="hero__card hero__card--3">
+          <span class="hero__card-icon">💻</span>
+          <div>
+            <p class="hero__card-label">Ingeniería de Software</p>
+            <p class="hero__card-value">APIs · Automatización · IoT</p>
           </div>
         </div>
 
@@ -77,30 +67,31 @@
 
   </div>
 
-  <!-- Banda de credenciales -->
+  <!-- Banda inferior — CAMBIO 3: sin título, 4 métricas concretas -->
   <div class="hero__credentials">
     <div class="container hero__credentials-inner">
-      <span class="hero__cred-label">Respaldado por</span>
       <div class="hero__cred-items">
+
         <div class="hero__cred-item">
-          <span class="hero__cred-icon">🎓</span>
-          <span>Maestría en Inteligencia Artificial</span>
+          <span class="hero__cred-icon">⚡</span>
+          <span>3+ años en proyectos de transmisión eléctrica</span>
         </div>
         <div class="hero__cred-divider"></div>
         <div class="hero__cred-item">
-          <span class="hero__cred-icon">🏛️</span>
-          <span>Colegio de Ingenieros del Perú</span>
+          <span class="hero__cred-icon">☀️</span>
+          <span>Hasta 30 KW instalados en zonas remotas y alta montaña</span>
         </div>
         <div class="hero__cred-divider"></div>
         <div class="hero__cred-item">
-          <span class="hero__cred-icon">⚙️</span>
-          <span>Proyectos en infraestructura crítica nacional</span>
+          <span class="hero__cred-icon">🤖</span>
+          <span>Modelos de IA desplegados en producción real en Azure</span>
         </div>
         <div class="hero__cred-divider"></div>
         <div class="hero__cred-item">
-          <span class="hero__cred-icon">🌎</span>
-          <span>Experiencia en proyectos rurales y off-grid</span>
+          <span class="hero__cred-icon">🏔️</span>
+          <span>+4,000 msnm — operaciones en condiciones extremas</span>
         </div>
+
       </div>
     </div>
   </div>
@@ -144,13 +135,18 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+    min-width: 0;        /* ← permite que el grid comprima esta columna */
+    width: 100%;
   }
 
   .hero__title {
-    font-size: var(--text-5xl);
+    font-size: clamp(1.1rem, 4.5vw, var(--text-5xl));
     font-weight: 800;
-    line-height: 1.1;
+    line-height: 1.15;
     color: var(--color-offwhite);
+    text-wrap: balance;
+    max-width: 100%;     /* ← sin restricción de caracteres */
+    width: 100%;
   }
 
   .hero__subtitle {
@@ -365,8 +361,13 @@
       padding-bottom: var(--space-6);
     }
 
+    .hero__content {
+      align-items: center;   /* ← centra todo el contenido en móvil */
+    }
+
     .hero__title {
-      font-size: var(--text-4xl);
+      font-size: clamp(1.1rem, 6.5vw, 2.2rem);  /* ← escala más agresivo en móvil */
+      text-align: center;
     }
 
     .hero__subtitle {
@@ -396,7 +397,11 @@
 
   @media (max-width: 480px) {
     .hero__title {
-      font-size: var(--text-3xl);
+      font-size: clamp(1rem, 6vw, 1.6rem);
+    }
+
+    .container {
+      padding: 0 var(--space-2);   /* Reduce padding lateral de 1.5rem a 1rem */
     }
 
     .hero__subtitle {
