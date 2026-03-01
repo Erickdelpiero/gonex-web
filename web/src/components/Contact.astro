@@ -1,0 +1,432 @@
+---
+const servicios = [
+  "Automatización Industrial",
+  "Inteligencia Artificial Aplicada",
+  "Sistemas Fotovoltaicos y BESS",
+  "Desarrollo de Software",
+  "Consultoría Tecnológica",
+  "Capacitación Empresarial",
+  "Otro / No estoy seguro"
+];
+---
+
+<section class="contact section" id="contacto">
+  <div class="container">
+
+    <div class="contact__inner">
+
+      <!-- Columna izquierda — información -->
+      <div class="contact__info">
+
+        <span class="section-label">Hablemos</span>
+        <h2 class="section-title">
+          ¿Tienes un proyecto<br/>
+          en <span class="accent">mente</span>?
+        </h2>
+        <p class="contact__desc">
+          Cuéntanos qué necesitas. En menos de 24 horas te respondemos
+          con una evaluación inicial sin costo y sin compromiso.
+        </p>
+
+        <!-- Canales de contacto -->
+        <div class="contact__canales">
+
+          <div class="contact__canal">
+            <span class="contact__canal-icon">📧</span>
+            <div>
+              <span class="contact__canal-label">Correo</span>
+              <a href="mailto:erick@gonex.pe" class="contact__canal-value">
+                erick@gonex.pe
+              </a>
+            </div>
+          </div>
+
+          <div class="contact__canal">
+            <span class="contact__canal-icon">💬</span>
+            <div>
+              <span class="contact__canal-label">WhatsApp Business</span>
+              <a href="https://wa.me/51941915097" target="_blank" rel="noopener" class="contact__canal-value">Escribir por WhatsApp →</a>
+            </div>
+          </div>
+
+          <div class="contact__canal">
+            <span class="contact__canal-icon">🌎</span>
+            <div>
+              <span class="contact__canal-label">Ubicación</span>
+              <span class="contact__canal-value contact__canal-value--text">
+                Lima, Perú — Atención a nivel nacional
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tiempo de respuesta -->
+        <div class="contact__promise">
+          <span class="contact__promise-dot"></span>
+          <span>Tiempo de respuesta: menos de 24 horas hábiles</span>
+        </div>
+
+      </div>
+
+      <!-- Columna derecha — formulario -->
+      <div class="contact__form-wrapper">
+        <form class="contact__form" id="contact-form">
+
+          <div class="form__row">
+            <div class="form__group">
+              <label class="form__label" for="nombre">Nombre completo *</label>
+              <input
+                class="form__input"
+                type="text"
+                id="nombre"
+                name="nombre"
+                placeholder="Ej: Carlos Ramírez"
+                required
+              />
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="empresa">Empresa</label>
+              <input
+                class="form__input"
+                type="text"
+                id="empresa"
+                name="empresa"
+                placeholder="Nombre de tu empresa"
+              />
+            </div>
+          </div>
+
+          <div class="form__row">
+            <div class="form__group">
+              <label class="form__label" for="email">Correo electrónico *</label>
+              <input
+                class="form__input"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="tu@empresa.com"
+                required
+              />
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="telefono">Teléfono / WhatsApp</label>
+              <input
+                class="form__input"
+                type="tel"
+                id="telefono"
+                name="telefono"
+                placeholder="+51 999999999"
+              />
+            </div>
+          </div>
+
+          <div class="form__group">
+            <label class="form__label" for="servicio">Servicio de interés</label>
+            <select class="form__input form__select" id="servicio" name="servicio">
+              <option value="" disabled selected>Selecciona un servicio...</option>
+              {servicios.map(s => (
+                <option value={s}>{s}</option>
+              ))}
+            </select>
+          </div>
+
+          <div class="form__group">
+            <label class="form__label" for="mensaje">Descripción del proyecto o necesidad *</label>
+            <textarea
+              class="form__input form__textarea"
+              id="mensaje"
+              name="mensaje"
+              placeholder="Cuéntanos brevemente qué necesitas, en qué industria operas y cuál es el problema que quieres resolver..."
+              rows="5"
+              required
+            ></textarea>
+          </div>
+
+          <!-- Estado del formulario -->
+          <div class="form__status" id="form-status"></div>
+
+          <button type="submit" class="btn-primary form__submit" id="form-btn">
+            Enviar mensaje
+          </button>
+
+          <p class="form__privacy">
+            Tu información es confidencial y no será compartida con terceros.
+          </p>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  // ── Manejo del formulario ──────────────────────────────────────────────
+  // Por ahora simula el envío visualmente.
+  // En v2 conectamos con Resend/Formspree → Zoho Mail + WhatsApp vía N8N.
+
+  const form   = document.getElementById('contact-form') as HTMLFormElement;
+  const btn    = document.getElementById('form-btn') as HTMLButtonElement;
+  const status = document.getElementById('form-status') as HTMLDivElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Estado de carga
+    btn.disabled    = true;
+    btn.textContent = 'Enviando...';
+    status.className = 'form__status';
+    status.textContent = '';
+
+    // Simula latencia de red (reemplazar por fetch real en v2)
+    await new Promise(r => setTimeout(r, 1200));
+
+    // Muestra éxito
+    status.className  = 'form__status form__status--success';
+    status.textContent = '✓ Mensaje enviado. Te respondemos en menos de 24 horas.';
+    btn.textContent   = 'Mensaje enviado ✓';
+    form.reset();
+
+    // Reactiva el botón después de 5 segundos
+    setTimeout(() => {
+      btn.disabled    = false;
+      btn.textContent = 'Enviar mensaje';
+    }, 5000);
+  });
+</script>
+
+<style>
+  /* ── Fondo diferenciado — separa visualmente esta sección ── */
+  .contact {
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .contact__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  /* ── Info izquierda ── */
+  .contact__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    position: sticky;
+    top: 90px;
+  }
+
+  .contact__desc {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: 1.75;
+  }
+
+  /* Canales */
+  .contact__canales {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding-top: var(--space-2);
+  }
+
+  .contact__canal {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .contact__canal-icon {
+    font-size: 1.25rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .contact__canal-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.2rem;
+  }
+
+  .contact__canal-value {
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-cyan);
+    text-decoration: none;
+    transition: color var(--transition);
+  }
+
+  .contact__canal-value:hover {
+    color: var(--color-cyan-dark);
+  }
+
+  .contact__canal-value--text {
+    color: var(--color-pearl);
+  }
+
+  /* Promesa de respuesta */
+  .contact__promise {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    padding-top: var(--space-2);
+  }
+
+  .contact__promise-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #10B981;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+  }
+
+  /* ── Formulario ── */
+  .contact__form-wrapper {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+  }
+
+  .contact__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .form__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+
+  .form__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form__label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-pearl);
+  }
+
+  .form__input {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-pearl);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    padding: 0.7rem 1rem;
+    width: 100%;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    outline: none;
+  }
+
+  .form__input:focus {
+    border-color: var(--color-cyan);
+    box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.1);
+  }
+
+  .form__input::placeholder {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .form__select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238899A6' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  .form__select option {
+    background-color: var(--color-surface);
+    color: var(--color-pearl);
+  }
+
+  .form__textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+  }
+
+  /* Estado del formulario */
+  .form__status {
+    font-size: var(--text-sm);
+    padding: 0;
+    border-radius: var(--radius-sm);
+    display: none;
+  }
+
+  .form__status--success {
+    display: block;
+    color: #10B981;
+    background-color: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    padding: 0.75rem 1rem;
+  }
+
+  .form__status--error {
+    display: block;
+    color: #EF4444;
+    background-color: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 0.75rem 1rem;
+  }
+
+  .form__submit {
+    width: 100%;
+    justify-content: center;
+    margin-top: var(--space-1);
+  }
+
+  .form__privacy {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  /* ── Responsivo ── */
+  @media (max-width: 900px) {
+    .contact__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    .contact__info {
+      position: static;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .form__row {
+      grid-template-columns: 1fr;
+    }
+
+    .contact__form-wrapper {
+      padding: var(--space-3);
+    }
+  }
+</style>

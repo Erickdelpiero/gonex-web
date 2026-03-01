@@ -1,0 +1,257 @@
+---
+---
+
+<header class="navbar">
+  <div class="container navbar__inner">
+
+    <a href="/" class="navbar__logo">GONEX</a>
+
+    <nav class="navbar__nav">
+      <a href="#servicios">Servicios</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#nosotros">Nosotros</a>
+
+      <!-- Toggle dark/light -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">
+        <span class="theme-toggle__icon" id="theme-icon">☀️</span>
+      </button>
+
+      <a href="#contacto" class="btn-primary navbar__cta">Agendar llamada</a>
+    </nav>
+
+    <!-- Controles móviles -->
+    <div class="navbar__mobile-controls">
+      <button class="theme-toggle" id="theme-toggle-mobile" aria-label="Cambiar tema">
+        <span class="theme-toggle__icon" id="theme-icon-mobile">☀️</span>
+      </button>
+      <button class="navbar__toggle" id="menu-toggle" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<div class="navbar__mobile" id="mobile-menu">
+  <a href="#servicios">Servicios</a>
+  <a href="#proyectos">Proyectos</a>
+  <a href="#nosotros">Nosotros</a>
+  <a href="#contacto" class="btn-primary">Agendar llamada</a>
+</div>
+
+<script>
+  // ─── DARK / LIGHT MODE ────────────────────────────────────────────────
+  const html     = document.documentElement;
+  const icons    = [
+    document.getElementById('theme-icon'),
+    document.getElementById('theme-icon-mobile')
+  ];
+  const btns     = [
+    document.getElementById('theme-toggle'),
+    document.getElementById('theme-toggle-mobile')
+  ];
+
+  // Lee la preferencia guardada, o usa dark como default
+  const savedTheme = localStorage.getItem('gonex-theme') || 'dark';
+  applyTheme(savedTheme);
+
+  function applyTheme(theme: string) {
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('gonex-theme', theme);
+    const icon = theme === 'dark' ? '☀️' : '🌙';
+    icons.forEach(el => { if (el) el.textContent = icon; });
+  }
+
+  btns.forEach(btn => {
+    btn?.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme') || 'dark';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+  });
+
+  // ─── MENÚ HAMBURGUESA ─────────────────────────────────────────────────
+  const toggle = document.getElementById('menu-toggle');
+  const menu   = document.getElementById('mobile-menu');
+
+  toggle?.addEventListener('click', () => {
+    menu?.classList.toggle('open');
+    toggle?.classList.toggle('active');
+  });
+
+  menu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menu?.classList.remove('open');
+      toggle?.classList.remove('active');
+    });
+  });
+</script>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background-color: var(--navbar-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color 0.3s ease;
+  }
+
+  .navbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+  }
+
+  .navbar__logo {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: var(--text-2xl);
+    color: var(--color-cyan);
+    letter-spacing: 0.15em;
+    text-decoration: none;
+    transition: color var(--transition);
+  }
+
+  .navbar__logo:hover {
+    color: var(--color-offwhite);
+  }
+
+  .navbar__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .navbar__nav a {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-pearl);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color var(--transition);
+  }
+
+  .navbar__nav a:hover {
+    color: var(--color-cyan);
+  }
+
+  .navbar__cta {
+    font-size: var(--text-sm) !important;
+    padding: 0.5rem 1.25rem !important;
+  }
+
+  /* ── Toggle de tema ── */
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition);
+    padding: 0;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--color-cyan);
+    background-color: rgba(0, 180, 216, 0.1);
+  }
+
+  .theme-toggle__icon {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  /* ── Mobile controls ── */
+  .navbar__mobile-controls {
+    display: none;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .navbar__toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .navbar__toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: var(--color-pearl);
+    transition: all var(--transition);
+  }
+
+  .navbar__toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .navbar__toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .navbar__toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* ── Menú móvil ── */
+  .navbar__mobile {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background-color: var(--color-charcoal);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-3);
+    flex-direction: column;
+    gap: var(--space-2);
+    z-index: 99;
+  }
+
+  .navbar__mobile.open {
+    display: flex;
+  }
+
+  .navbar__mobile a {
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-pearl);
+    padding: var(--space-1) 0;
+    border-bottom: 1px solid var(--color-border);
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+  }
+
+  /* El btn-primary dentro del menú móvil necesita ser bloque para centrarse */
+  .navbar__mobile .btn-primary {
+    display: block;
+    width: 100%;
+    text-align: center;
+    border-bottom: none;
+    margin-top: var(--space-1);
+  }
+
+  @media (max-width: 768px) {
+    .navbar__nav {
+      display: none;
+    }
+    .navbar__mobile-controls {
+      display: flex;
+    }
+  }
+</style>

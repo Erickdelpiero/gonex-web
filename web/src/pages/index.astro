@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import Portfolio from '../components/Portfolio.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+---
+
+<BaseLayout title="Inicio">
+  <Hero />
+  <Services />
+  <Portfolio />
+  <About />
+  <Contact />
+  <Footer />
+  <WhatsAppButton />
+</BaseLayout>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 1rem;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  h1 {
+    font-size: var(--text-4xl);
+    color: var(--color-offwhite);
+  }
+
+  p {
+    font-size: var(--text-xl);
+    color: var(--color-cyan);
+    font-family: var(--font-heading);
+    letter-spacing: 0.05em;
+  }
+</style>
