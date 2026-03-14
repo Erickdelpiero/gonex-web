@@ -86,6 +86,9 @@ const servicios = [
           <!-- Activa respuesta automática al usuario que llenó el formulario -->
           <input type="hidden" name="_autoresponse" value="Hola, recibimos tu mensaje en GONEX S.A.C. Te respondemos en menos de 24 horas hábiles. — Equipo GONEX" />
 
+          <!-- Webhook hacia N8N para notificación WhatsApp -->
+          <input type="hidden" name="_webhook" value="https://n8n.coopelmilagro.com/webhook/gonex-contacto" />
+
           <div class="form__row">
             <div class="form__group">
               <label class="form__label" for="nombre">Nombre completo *</label>
