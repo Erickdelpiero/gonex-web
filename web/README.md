@@ -263,7 +263,7 @@ La preferencia se guarda en `localStorage` con la clave `gonex-theme`.
 - [ ] Formulario conectado a WhatsApp vía N8N (reemplaza simulación actual)
 - [ ] Logo SVG definitivo en navbar y favicon
 - [ ] RUC visible en footer
-- [ ] Correo `erick@gonex.pe`
+- [ ] Correo `gonexadmin@gmail.com`
 
 ### v2 — Expansión de contenido
 - [ ] Blog técnico (Astro Content Collections)
@@ -303,7 +303,7 @@ Los proyectos reales (ISA REP vía BAORI, FERCP) se presentan con descripciones 
 
 **GONEX S.A.C.**  
 Lima, Perú  
-erick@gonex.pe  
+gonexadmin@gmail.com 
 +51 941 915 097  
 [linkedin.com/in/erickdelpiero](https://www.linkedin.com/in/erickdelpiero)
 

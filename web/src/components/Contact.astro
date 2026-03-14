@@ -35,8 +35,8 @@ const servicios = [
             <span class="contact__canal-icon">📧</span>
             <div>
               <span class="contact__canal-label">Correo</span>
-              <a href="mailto:erick@gonex.pe" class="contact__canal-value">
-                erick@gonex.pe
+              <a href="mailto:gonexadmin@gmail.com" class="contact__canal-value">
+                gonexadmin@gmail.com
               </a>
             </div>
           </div>
@@ -71,7 +71,23 @@ const servicios = [
 
       <!-- Columna derecha — formulario -->
       <div class="contact__form-wrapper">
-        <form class="contact__form" id="contact-form">
+        <form class="contact__form" id="contact-form" action="https://formsubmit.co/gonexadmin@gmail.com" method="POST">
+          <!-- FormSubmit — configuración -->
+
+          <!-- Asunto del correo que recibirás -->
+          <input type="hidden" name="_subject" value="Nuevo contacto desde gonex.pe" />
+
+          <!-- Redirige al usuario a esta URL después de enviar -->
+          <input type="hidden" name="_next" value="https://gonex.pe/?enviado=true" />
+
+          <!-- Desactiva el captcha de FormSubmit (ya tenemos el nuestro si queremos) -->
+          <input type="hidden" name="_captcha" value="false" />
+
+          <!-- Honeypot anti-spam — campo invisible que los bots llenan y los humanos no -->
+          <input type="text" name="_honey" style="display:none" />
+
+          <!-- Activa respuesta automática al usuario que llenó el formulario -->
+          <input type="hidden" name="_autoresponse" value="Hola, recibimos tu mensaje en GONEX S.A.C. Te respondemos en menos de 24 horas hábiles. — Equipo GONEX" />
 
           <div class="form__row">
             <div class="form__group">
@@ -162,38 +178,27 @@ const servicios = [
 </section>
 
 <script>
-  // ── Manejo del formulario ──────────────────────────────────────────────
-  // Por ahora simula el envío visualmente.
-  // En v2 conectamos con Resend/Formspree → Zoho Mail + WhatsApp vía N8N.
+  // FormSubmit maneja el envío real vía POST al servidor.
+  // Este script solo mejora la experiencia visual durante el envío.
 
   const form   = document.getElementById('contact-form') as HTMLFormElement;
   const btn    = document.getElementById('form-btn') as HTMLButtonElement;
   const status = document.getElementById('form-status') as HTMLDivElement;
 
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    // Estado de carga
+  form?.addEventListener('submit', () => {
+    // Solo cambiamos el botón visualmente — el POST lo hace el navegador
     btn.disabled    = true;
     btn.textContent = 'Enviando...';
-    status.className = 'form__status';
-    status.textContent = '';
-
-    // Simula latencia de red (reemplazar por fetch real en v2)
-    await new Promise(r => setTimeout(r, 1200));
-
-    // Muestra éxito
-    status.className  = 'form__status form__status--success';
-    status.textContent = '✓ Mensaje enviado. Te respondemos en menos de 24 horas.';
-    btn.textContent   = 'Mensaje enviado ✓';
-    form.reset();
-
-    // Reactiva el botón después de 5 segundos
-    setTimeout(() => {
-      btn.disabled    = false;
-      btn.textContent = 'Enviar mensaje';
-    }, 5000);
   });
+
+  // Detecta si el usuario volvió después de enviar (?enviado=true en la URL)
+  if (window.location.search.includes('enviado=true')) {
+    status.className   = 'form__status form__status--success';
+    status.textContent = '✓ Mensaje enviado. Te respondemos en menos de 24 horas.';
+
+    // Limpia el parámetro de la URL sin recargar la página
+    window.history.replaceState({}, '', window.location.pathname);
+  }
 </script>
 
 <style>
