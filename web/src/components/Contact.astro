@@ -83,9 +83,6 @@ const servicios = [
           <!-- Desactiva el captcha de FormSubmit (ya tenemos el nuestro si queremos) -->
           <input type="hidden" name="_captcha" value="false" />
 
-          <!-- Honeypot anti-spam — campo invisible que los bots llenan y los humanos no -->
-          <input type="text" name="_honey" style="display:none" />
-
           <!-- Activa respuesta automática al usuario que llenó el formulario -->
           <input type="hidden" name="_autoresponse" value="Hola, recibimos tu mensaje en GONEX S.A.C. Te respondemos en menos de 24 horas hábiles. — Equipo GONEX" />
 
@@ -178,27 +175,58 @@ const servicios = [
 </section>
 
 <script>
-  // FormSubmit maneja el envío real vía POST al servidor.
-  // Este script solo mejora la experiencia visual durante el envío.
-
   const form   = document.getElementById('contact-form') as HTMLFormElement;
   const btn    = document.getElementById('form-btn') as HTMLButtonElement;
   const status = document.getElementById('form-status') as HTMLDivElement;
 
-  form?.addEventListener('submit', () => {
-    // Solo cambiamos el botón visualmente — el POST lo hace el navegador
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Estado de carga
     btn.disabled    = true;
     btn.textContent = 'Enviando...';
+    status.className   = 'form__status';
+    status.textContent = '';
+
+    try {
+      // AJAX endpoint de FormSubmit — no redirige, devuelve JSON
+      const data = new FormData(form);
+      const response = await fetch('https://formsubmit.co/ajax/gonexadmin@gmail.com', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: data
+      });
+
+      const result = await response.json();
+
+      if (result.success === 'true' || result.success === true) {
+        // Éxito — muestra mensaje y resetea
+        status.className   = 'form__status form__status--success';
+        status.textContent = '✓ Mensaje enviado. Te respondemos en menos de 24 horas.';
+        btn.textContent    = 'Mensaje enviado ✓';
+        form.reset();
+
+        // Hace scroll suave hasta el mensaje de éxito
+        status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // Reactiva el botón después de 5 segundos
+        setTimeout(() => {
+          btn.disabled    = false;
+          btn.textContent = 'Cuéntanos tu proyecto';
+        }, 5000);
+
+      } else {
+        throw new Error('FormSubmit error');
+      }
+
+    } catch (err) {
+      // Error — muestra mensaje y reactiva botón
+      status.className   = 'form__status form__status--error';
+      status.textContent = '✗ Hubo un problema al enviar. Escríbenos directamente a gonexadmin@gmail.com';
+      btn.disabled    = false;
+      btn.textContent = 'Cuéntanos tu proyecto';
+    }
   });
-
-  // Detecta si el usuario volvió después de enviar (?enviado=true en la URL)
-  if (window.location.search.includes('enviado=true')) {
-    status.className   = 'form__status form__status--success';
-    status.textContent = '✓ Mensaje enviado. Te respondemos en menos de 24 horas.';
-
-    // Limpia el parámetro de la URL sin recargar la página
-    window.history.replaceState({}, '', window.location.pathname);
-  }
 </script>
 
 <style>
